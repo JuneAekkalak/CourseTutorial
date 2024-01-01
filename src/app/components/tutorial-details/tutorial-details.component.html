@@ -1,0 +1,96 @@
+<!-- Display mode -->
+<div *ngIf="viewMode && currentTutorial._id" class="container mt-5">
+  <h4>Course Details</h4>
+  <div class="card">
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Code:</strong> {{ currentTutorial.course_code }}</li>
+        <li class="list-group-item"><strong>Name:</strong> {{ currentTutorial.course_name }}</li>
+        <li class="list-group-item"><strong>Description:</strong> {{ currentTutorial.course_decript }}</li>
+        <li class="list-group-item"><strong>Year:</strong> {{ currentTutorial.year }}</li>
+        <li class="list-group-item"><strong>Group:</strong> {{ currentTutorial.group }}</li>
+        <li class="list-group-item"><strong>Number:</strong> {{ currentTutorial.number }}</li>
+        <li class="list-group-item"><strong>Status:</strong> {{ currentTutorial.IsActive ? 'Active' : 'InActive' }}</li>
+      </ul>
+      <a class="btn btn-warning mt-3" routerLink="/tutorials/{{ currentTutorial._id }}">Edit</a>
+    </div>
+  </div>
+</div>
+
+<!-- Edit mode -->
+<div *ngIf="!viewMode && currentTutorial._id" class="container mt-5">
+  <h4>Edit Course</h4>
+  <!-- (ngSubmit)="updateTutorial()" -->
+  <form class="mt-4">
+
+    <!-- Course Details Section -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Course Details</h5>
+
+        <!-- Code Input -->
+        <div class="form-group">
+          <label for="code">Code</label>
+          <input type="text" class="form-control" id="code" [(ngModel)]="currentTutorial.course_code" name="code" />
+        </div>
+
+        <!-- Name Input -->
+        <div class="form-group">
+          <label for="title">Name</label>
+          <input type="text" class="form-control" id="title" [(ngModel)]="currentTutorial.course_name" name="title" />
+        </div>
+
+        <!-- Description Input -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" [(ngModel)]="currentTutorial.course_decript"
+            name="description" rows="3"></textarea>
+        </div>
+
+        <!-- Year, Group, and Number Inputs -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="year">Year</label>
+              <input type="text" class="form-control" id="year" [(ngModel)]="currentTutorial.year" name="year" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="group">Group</label>
+              <input type="text" class="form-control" id="group" [(ngModel)]="currentTutorial.group" name="group" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="number">Number</label>
+              <input type="text" class="form-control" id="number" [(ngModel)]="currentTutorial.number" name="number" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Display -->
+        <div class="form-group">
+          <strong>Status:</strong> {{ currentTutorial.IsActive ? "Active" : "InActive" }}
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group mt-3">
+          <button *ngIf="currentTutorial.IsActive" class="btn btn-danger mr-2"
+            (click)="updatePublished(false)">InActive</button>
+          <button *ngIf="!currentTutorial.IsActive" class="btn btn-success mr-2"
+            (click)="updatePublished(true)">Active</button>
+          <button class="btn btn-danger mr-2" (click)="deleteTutorial()">Delete</button>
+          <button type="submit" class="btn btn-primary" (click)="updateTutorial()">Update</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- No Course Selected -->
+<div *ngIf="!currentTutorial._id">
+  <p>Please click on a Course...</p>
+</div>
